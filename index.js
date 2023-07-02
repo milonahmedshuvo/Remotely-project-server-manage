@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -46,6 +46,15 @@ async function run() {
        const filter = {}
        const allData = await companiceCollections.find(filter).toArray()
        res.send(allData)
+    })
+
+
+    app.get("/singleCompanydatails/:id", async (req, res) => {
+        const id = req.params.id
+        const filter = { _id: new ObjectId(id)}
+        console.log(filter)
+        const data = await companiceCollections.findOne(filter)
+        res.send(data)
     })
 
 
