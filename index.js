@@ -42,6 +42,11 @@ async function run() {
         res.send(result)
     })
 
+    app.get("/allCompany", async (req, res )=> {
+       const filter = {}
+       const allData = await companiceCollections.find(filter).toArray()
+       res.send(allData)
+    })
 
 
 
