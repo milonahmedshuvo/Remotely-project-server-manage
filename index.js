@@ -36,6 +36,14 @@ async function run() {
 
 
 
+    app.get("/campanyLimit", async (req, res) => {
+        const filter = {}
+        const result = await companiceCollections.find(filter).limit(3).toArray()
+        res.send(result)
+    })
+
+
+
 
 
 
