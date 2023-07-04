@@ -31,7 +31,7 @@ async function run() {
 
 
     const companiceCollections = client.db("remotelyDatabase").collection("companys")
-     
+    const jobPostDataCollections = client.db("remotelyDatabase").collection("jobPostData") 
 
 
 
@@ -52,12 +52,19 @@ async function run() {
     app.get("/singleCompanydatails/:id", async (req, res) => {
         const id = req.params.id
         const filter = { _id: new ObjectId(id)}
-        console.log(filter)
         const data = await companiceCollections.findOne(filter)
         res.send(data)
     })
 
 
+
+
+    app.get("/job/:companyName", async (req, res ) => {
+      const name = req.params.companyName
+      const filter ={companyName:name}
+      const data = await jobPostDataCollections.find(filter).toArray()
+      res.send(data)
+    })
 
 
 
