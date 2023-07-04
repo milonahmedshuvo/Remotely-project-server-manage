@@ -57,13 +57,21 @@ async function run() {
     })
 
 
-
+    // jobpost collection operation start 
 
     app.get("/job/:companyName", async (req, res ) => {
       const name = req.params.companyName
       const filter ={companyName:name}
       const data = await jobPostDataCollections.find(filter).toArray()
       res.send(data)
+    })
+
+
+    app.get("/jobSingle/:id", async (req, res ) => {
+       const id = req.params.id
+       const filter ={ _id : new ObjectId(id)}
+       const jobpost = await jobPostDataCollections.findOne(filter)
+       res.send(jobpost)
     })
 
 
