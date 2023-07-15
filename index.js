@@ -31,7 +31,8 @@ async function run() {
 
 
     const companiceCollections = client.db("remotelyDatabase").collection("companys")
-    const jobPostDataCollections = client.db("remotelyDatabase").collection("jobPostData") 
+    const jobPostDataCollections = client.db("remotelyDatabase").collection("jobPostData")
+    const newUserDataCollections = client.db("remotelyDatabase").collection("newUserData") 
 
 
 
@@ -75,6 +76,13 @@ async function run() {
     })
 
 
+    // user data post 
+    app.post("/newUserData", async (req, res)=> {
+      const data = req.body
+      const result = await newUserDataCollections.insertOne(data)
+      res.send(result)
+    })
+
 
 
 
@@ -100,7 +108,7 @@ run().catch(console.dir);
 
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Remotely server is runing..!");
 });
 
 app.listen(port, () => {
