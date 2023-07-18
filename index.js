@@ -32,7 +32,8 @@ async function run() {
 
     const companiceCollections = client.db("remotelyDatabase").collection("companys")
     const jobPostDataCollections = client.db("remotelyDatabase").collection("jobPostData")
-    const newUserDataCollections = client.db("remotelyDatabase").collection("newUserData") 
+    const userInfoDataCollections = client.db("remotelyDatabase").collection("newUserData")
+    const jobSeekerEmployerJobPostCollections = client.db("remotelyDatabase").collection("createNewJobPost") 
 
 
 
@@ -86,6 +87,57 @@ async function run() {
 
 
 
+
+
+    // job Seeker query  
+    app.get("/userInfo", async (req, res) => {
+         const email = req.query.email
+        const filter = {email:email}
+        const result= await userInfoDataCollections.findOne(filter)
+        res.send(result) 
+    })
+
+
+
+    // job seeker/employer job post 
+    app.post("/jobSeeker/employerJobpost", async (req, res) => {
+        const jobPost = req.body
+        const result= await jobSeekerEmployerJobPostCollections.insertOne(jobPost)
+        res.send(result)   
+    } )
+
+
+
+  //  get email query job post data 
+  app.get("/getJobPostData", async (req, res) => {
+     const email = req.query.email
+     const filter = {email: email}
+     const result= await jobSeekerEmployerJobPostCollections.find(filter).toArray()
+     res.send(result)
+  }) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
   } finally {
     // Ensures that the client will close when you finish/error
