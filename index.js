@@ -117,6 +117,14 @@ async function run() {
   }) 
 
 
+  app.delete("/jobPostDelete/:id", async (req, res) => {
+    const id = req.params.id
+    const query = {_id: ObjectId(id)}
+    console.log(query)
+    const deletePost = await jobSeekerEmployerJobPostCollections.deleteOne(query)
+    res.send(deletePost)
+  })
+
 
 
 
