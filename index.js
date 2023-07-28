@@ -159,11 +159,14 @@ app.get("/jobSerchFilter", async (req, res)=> {
     console.log(quary)
     
     const data = await jobPostDataCollections.find(quary).toArray()
-    if(data){
-      res.send(data)
-    }
-    
-    res.send({massage:"Data not found"})
+    res.send(data)
+})
+
+app.get("/alljobOneViewPost/:id", async (req, res) => {
+    const id = req.params.id
+    const quary = {_id : new ObjectId(id)}
+    const oneJob = await jobPostDataCollections.findOne(quary)
+    res.send(oneJob)
 })
 
 
