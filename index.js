@@ -92,7 +92,7 @@ async function run() {
     // job Seeker query  
     app.get("/userInfo", async (req, res) => {
          const email = req.query.email
-        const filter = {email:email}
+        const filter = {email:email, userIdentity:"Employer"}
         const result= await userInfoDataCollections.findOne(filter)
         res.send(result) 
     })
@@ -119,11 +119,53 @@ async function run() {
 
   app.delete("/jobPostDelete/:id", async (req, res) => {
     const id = req.params.id
-    const query = {_id: ObjectId(id)}
+    const query = {_id: new ObjectId(id)}
     console.log(query)
     const deletePost = await jobSeekerEmployerJobPostCollections.deleteOne(query)
     res.send(deletePost)
   })
+
+
+
+
+
+
+
+
+
+
+
+
+// Finds job search
+app.get("/findJobLocation", async (req, res) => {
+  const filter = {}
+  const result = await jobPostDataCollections.find(filter).project({jobTitle:1, companyName: 1}).toArray()
+  res.send(result)
+})
+
+app.get("/alljobs", async (req, res) => {
+  const filter = {}
+  const result = await jobPostDataCollections.find(filter).toArray()
+  res.send(result)
+})
+
+app.get("/jobSerchFilter", async (req, res)=> {
+    const company = req.query.company
+    const jobtitle = req.query.job
+    const quary = {
+      companyName:company,
+      jobTitle:jobtitle 
+    }
+    console.log(quary)
+    
+    const data = await jobPostDataCollections.find(quary).toArray()
+    if(data){
+      res.send(data)
+    }
+    
+    res.send({massage:"Data not found"})
+})
+
 
 
 
