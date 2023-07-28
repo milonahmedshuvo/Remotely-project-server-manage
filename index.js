@@ -34,7 +34,8 @@ async function run() {
     const jobPostDataCollections = client.db("remotelyDatabase").collection("jobPostData")
     const userInfoDataCollections = client.db("remotelyDatabase").collection("newUserData")
     const jobSeekerEmployerJobPostCollections = client.db("remotelyDatabase").collection("createNewJobPost") 
-
+    const userApplyDataCollection = client.db("remotelyDatabase").collection("userApplyData")
+    
 
 
 
@@ -177,7 +178,12 @@ app.get("/alljobOneViewPost/:id", async (req, res) => {
 
 
 
-
+// userApplyDataCollection fuctionality  starting 
+app.post("/applyDataPost", async (req, res) => {
+    const applyData = req.body
+    const insertdata = await userApplyDataCollection.insertOne(applyData)
+    res.send(insertdata)
+}) 
 
 
 
