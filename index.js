@@ -90,10 +90,15 @@ async function run() {
 
 
 
-    // job Seeker query  
+
+
+
+
+
+    // job Seeker dashbord funcnality and  query **************  
     app.get("/userInfo", async (req, res) => {
          const email = req.query.email
-        const filter = {email:email, userIdentity:"Employer"}
+        const filter = {email:email, userIdentity:"Job Seeker"}
         const result= await userInfoDataCollections.findOne(filter)
         res.send(result) 
     })
@@ -185,6 +190,13 @@ app.post("/applyDataPost", async (req, res) => {
     res.send(insertdata)
 }) 
 
+
+app.get("/applyingDataByEmail", async (req, res) => {
+   const email = req.query.email
+   const quary = {email: email}
+   const applying = await userApplyDataCollection.find(quary).toArray()
+   res.send(applying)
+})
 
 
 
