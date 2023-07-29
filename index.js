@@ -33,8 +33,9 @@ async function run() {
     const companiceCollections = client.db("remotelyDatabase").collection("companys")
     const jobPostDataCollections = client.db("remotelyDatabase").collection("jobPostData")
     const userInfoDataCollections = client.db("remotelyDatabase").collection("newUserData")
-    const jobSeekerEmployerJobPostCollections = client.db("remotelyDatabase").collection("createNewJobPost") 
+    const jobSeekerJobPostCollections = client.db("remotelyDatabase").collection("createNewJobPost") 
     const userApplyDataCollection = client.db("remotelyDatabase").collection("userApplyData")
+    const employerJobPostCollection = client.db("remotelyDatabase").collection("employerJobPost")
     
 
 
@@ -108,7 +109,7 @@ async function run() {
     // job seeker/employer job post 
     app.post("/jobSeeker/employerJobpost", async (req, res) => {
         const jobPost = req.body
-        const result= await jobSeekerEmployerJobPostCollections.insertOne(jobPost)
+        const result= await jobSeekerJobPostCollections.insertOne(jobPost)
         res.send(result)   
     } )
 
@@ -118,7 +119,7 @@ async function run() {
   app.get("/getJobPostData", async (req, res) => {
      const email = req.query.email
      const filter = {email: email}
-     const result= await jobSeekerEmployerJobPostCollections.find(filter).toArray()
+     const result= await jobSeekerJobPostCollections.find(filter).toArray()
      res.send(result)
   }) 
 
@@ -127,7 +128,7 @@ async function run() {
     const id = req.params.id
     const query = {_id: new ObjectId(id)}
     console.log(query)
-    const deletePost = await jobSeekerEmployerJobPostCollections.deleteOne(query)
+    const deletePost = await jobSeekerJobPostCollections.deleteOne(query)
     res.send(deletePost)
   })
 
@@ -142,7 +143,7 @@ async function run() {
 
 
 
-// Finds job search
+// Finds all job  route and search components
 app.get("/findJobLocation", async (req, res) => {
   const filter = {}
   const result = await jobPostDataCollections.find(filter).project({jobTitle:1, companyName: 1}).toArray()
@@ -199,12 +200,43 @@ app.get("/applyingDataByEmail", async (req, res) => {
 })
 
 
+app.delete("/applyingDelete/:id", async (req, res)=> {
+    const id = req.params.id
+    const quary = {_id: new ObjectId(id)}
+    console.log(quary)
+    const result = await userApplyDataCollection.deleteOne(quary)
+    res.send(result)
+})
 
 
 
 
 
 
+
+
+
+
+
+// Employer layout and functionality start 
+app.get("/employer", async (req, res)=> {
+   const email = req.query.email
+   const query = {
+      email: email,
+      userIdentity:"Employer"
+   }
+   console.log(query)
+   const employer = await userInfoDataCollections.findOne(query)
+   console.log(employer)
+   res.send(employer)
+})
+
+
+app.post("/employerJobPost", async (req, res) => {
+    const data = req.body
+    const result = await employerJobPostCollection.insertOne(data)
+    res.send(result)
+})
 
 
 
