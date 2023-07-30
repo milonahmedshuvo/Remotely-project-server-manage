@@ -244,6 +244,13 @@ app.get("/employerJobPost", async (req, res) => {
    const result = await employerJobPostCollection.find(filter).toArray()
    res.send(result) 
 })
+
+app.delete("/employerPostDelete/:id", async (req, res) => {
+    const id = req.params.id 
+    const filter = {_id: new ObjectId(id)}
+    const postDelete= await employerJobPostCollection.deleteOne(filter)
+    res.send(postDelete)
+})
     
 
   } finally {
