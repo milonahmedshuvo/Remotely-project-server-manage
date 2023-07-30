@@ -253,6 +253,24 @@ app.delete("/employerPostDelete/:id", async (req, res) => {
 })
     
 
+
+
+
+
+
+
+// Admin functionality starting 
+app.get("/userInfoAlldata", async (req, res) => {
+   const filter = {}
+   const result = await userInfoDataCollections.find(filter).toArray()
+   res.send(result)
+})
+
+
+
+
+
+
   } finally {
     // Ensures that the client will close when you finish/error
   }
