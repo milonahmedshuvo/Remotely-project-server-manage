@@ -239,7 +239,11 @@ app.post("/employerJobPost", async (req, res) => {
 })
 
 
-
+app.get("/employerJobPost", async (req, res) => {
+   const filter = {}
+   const result = await employerJobPostCollection.find(filter).toArray()
+   res.send(result) 
+})
     
 
   } finally {
