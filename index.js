@@ -82,11 +82,16 @@ async function run() {
     // user data post 
     app.post("/newUserData", async (req, res)=> {
       const data = req.body
-      const result = await newUserDataCollections.insertOne(data)
+      const result = await userInfoDataCollections.insertOne(data)
       res.send(result)
     })
 
 
+app.get("/alljob", async (req, res) => {
+   const filter = {}
+   const result = await jobPostDataCollections.find(filter).toArray()
+   res.send(result)
+})    
 
 
 
@@ -272,6 +277,7 @@ app.delete("/userDelete/:id", async (req, res) => {
   const result = await userInfoDataCollections.deleteOne(query)
   res.send(result)
 })
+
 
 
 
