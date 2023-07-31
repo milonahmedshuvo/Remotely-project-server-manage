@@ -284,6 +284,11 @@ app.delete("/userDelete/:id", async (req, res) => {
   res.send(result)
 })
 
+app.get("/employerjobpost", async (req, res) => {
+   const filter = {}
+   const result = await employerJobPostCollection.find(filter).toArray()
+   res.send(result)
+})
 
 
 
