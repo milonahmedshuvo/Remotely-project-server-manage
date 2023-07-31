@@ -266,7 +266,12 @@ app.get("/userInfoAlldata", async (req, res) => {
    res.send(result)
 })
 
-
+app.delete("/userDelete/:id", async (req, res) => {
+  const id = req.params.id 
+  const query = {_id: new ObjectId(id)}
+  const result = await userInfoDataCollections.deleteOne(query)
+  res.send(result)
+})
 
 
 
