@@ -319,6 +319,14 @@ app.get("/getAdmin", async (req, res)=>{
 
 
 
+// get admin user 
+app.get("/getAdminUser", async (req, res)=>{
+   const email = req.query.email 
+   const filter = {email: email, userIdentity:"Admin"}
+   const admin = userInfoDataCollections.findOne(filter)
+   res.send(admin)
+})
+
 
   } finally {
     // Ensures that the client will close when you finish/error
