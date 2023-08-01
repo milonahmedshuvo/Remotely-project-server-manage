@@ -310,6 +310,14 @@ app.get("/jobSeeker", async (req, res) => {
    res.send({isJobseeker: data.userIdentity==="Job Seeker"}) 
 })
 
+app.get("/getAdmin", async (req, res)=>{
+   const email = req.query.email 
+   const filter = {email:email}
+   const user = await userInfoDataCollections.findOne(filter)
+   res.send({isAdmin: user.userIdentity==="Admin"})
+})
+
+
 
 
   } finally {
