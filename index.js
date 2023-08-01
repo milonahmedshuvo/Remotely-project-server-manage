@@ -294,6 +294,23 @@ app.get("/employerjobpost", async (req, res) => {
 
 
 
+// Make custom hooks and verify all user 
+app.get("/getEmployer", async (req, res) => {
+    const email = req.query.email 
+    const query = {email: email}
+    const user = await userInfoDataCollections.findOne(query)
+    res.send({isEmployer: user.userIdentity ==="Employer"})
+})
+
+
+app.get("/jobSeeker", async (req, res) => {
+   const email = req.query.email
+   const query = {email: email}
+   const data = await userInfoDataCollections.findOne(query)
+   res.send({isJobseeker: data.userIdentity==="Job Seeker"}) 
+})
+
+
 
   } finally {
     // Ensures that the client will close when you finish/error
