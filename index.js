@@ -82,7 +82,9 @@ async function run() {
     // user data post 
     app.post("/newUserData", async (req, res)=> {
       const data = req.body
+      console.log(data)
       const result = await userInfoDataCollections.insertOne(data)
+      console.log(result)
       res.send(result)
     })
 
@@ -299,7 +301,10 @@ app.get("/getEmployer", async (req, res) => {
     const email = req.query.email 
     const query = {email: email}
     const user = await userInfoDataCollections.findOne(query)
-    res.send({isEmployer: user.userIdentity ==="Employer"})
+    if(user){
+      res.send({isEmployer: user.userIdentity ==="Employer"})
+    }
+    
 })
 
 
@@ -307,25 +312,57 @@ app.get("/jobSeeker", async (req, res) => {
    const email = req.query.email
    const query = {email: email}
    const data = await userInfoDataCollections.findOne(query)
-   res.send({isJobseeker: data.userIdentity==="Job Seeker"}) 
+   if(data){
+    res.send({isJobseeker: data.userIdentity==="Job Seeker"})
+   }
+   
 })
 
-app.get("/getAdmin", async (req, res)=>{
-   const email = req.query.email 
+
+app.get("/getjobs", async (req, res) => {
+       const email = req.query.email
    const filter = {email:email}
+   console.log(filter)
    const user = await userInfoDataCollections.findOne(filter)
-   res.send({isAdmin: user.userIdentity==="Admin"})
+   console.log(user)
+    
+   if(user){
+    res.send(user)
+   }
+   
+   
 })
+
+
+
+
+
+
+
+
+
+
+// app.get("/getAdmin", async (req, res)=>{
+//    const email = req.query.email 
+//    const filter = {email:email}
+//    const user = await userInfoDataCollections.findOne(filter)
+//    if(user){
+
+//      res.send({isAdmin: user.userIdentity==="Admin"})
+//    }
+// })
 
 
 
 // get admin user 
-app.get("/getAdminUser", async (req, res)=>{
-   const email = req.query.email 
-   const filter = {email: email, userIdentity:"Admin"}
-   const admin = userInfoDataCollections.findOne(filter)
-   res.send(admin)
-})
+// app.get("/getAdminUser", async (req, res)=>{
+//    const email = req.query.email 
+//    const filter = {email: email, userIdentity:"Admin"}
+//    console.log(filter)
+//    const admin = await userInfoDataCollections.findOne(filter)
+//    console.log(admin)
+//    res.send(admin)
+// })
 
 
   } finally {
