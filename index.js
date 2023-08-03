@@ -312,6 +312,7 @@ app.get("/jobSeeker", async (req, res) => {
    const email = req.query.email
    const query = {email: email}
    const data = await userInfoDataCollections.findOne(query)
+   console.log(data)
    if(data){
     res.send({isJobseeker: data.userIdentity==="Job Seeker"})
    }
@@ -322,9 +323,8 @@ app.get("/jobSeeker", async (req, res) => {
 app.get("/getjobs", async (req, res) => {
        const email = req.query.email
    const filter = {email:email}
-   console.log(filter)
    const user = await userInfoDataCollections.findOne(filter)
-   console.log(user)
+  
     
    if(user){
     res.send(user)
@@ -332,9 +332,6 @@ app.get("/getjobs", async (req, res) => {
    
    
 })
-
-
-
 
 
 
