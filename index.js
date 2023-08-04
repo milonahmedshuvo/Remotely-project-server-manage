@@ -296,11 +296,19 @@ app.get("/employerjobpost", async (req, res) => {
 
 
 
+
+
+
+
+
+
+
 // Make custom hooks and verify all user 
-app.get("/getEmployer", async (req, res) => {
+app.get("/customHooksEmployer", async (req, res) => {
     const email = req.query.email 
     const query = {email: email}
     const user = await userInfoDataCollections.findOne(query)
+
     if(user){
       res.send({isEmployer: user.userIdentity ==="Employer"})
     }
@@ -312,7 +320,6 @@ app.get("/jobSeeker", async (req, res) => {
    const email = req.query.email
    const query = {email: email}
    const data = await userInfoDataCollections.findOne(query)
-   console.log(data)
    if(data){
     res.send({isJobseeker: data.userIdentity==="Job Seeker"})
    }
@@ -320,17 +327,14 @@ app.get("/jobSeeker", async (req, res) => {
 })
 
 
-app.get("/getjobs", async (req, res) => {
-       const email = req.query.email
+
+app.get("/getAdminCustomHook", async (req, res)=>{
+   const email = req.query.email 
    const filter = {email:email}
    const user = await userInfoDataCollections.findOne(filter)
-  
-    
    if(user){
-    res.send(user)
+     res.send({isAdmin: user.userIdentity==="Admin"})
    }
-   
-   
 })
 
 
@@ -339,27 +343,15 @@ app.get("/getjobs", async (req, res) => {
 
 
 
-// app.get("/getAdmin", async (req, res)=>{
-//    const email = req.query.email 
-//    const filter = {email:email}
-//    const user = await userInfoDataCollections.findOne(filter)
-//    if(user){
-
-//      res.send({isAdmin: user.userIdentity==="Admin"})
-//    }
-// })
-
-
-
-// get admin user 
-// app.get("/getAdminUser", async (req, res)=>{
-//    const email = req.query.email 
-//    const filter = {email: email, userIdentity:"Admin"}
-//    console.log(filter)
-//    const admin = await userInfoDataCollections.findOne(filter)
-//    console.log(admin)
-//    res.send(admin)
-// })
+// get admin user info batabasa in profile show
+app.get("/getAdminUser", async (req, res)=>{
+   const email = req.query.email 
+   const filter = {email: email, userIdentity:"Admin"}
+   console.log(filter)
+   const admin = await userInfoDataCollections.findOne(filter)
+   console.log(admin)
+   res.send(admin)
+})
 
 
   } finally {
