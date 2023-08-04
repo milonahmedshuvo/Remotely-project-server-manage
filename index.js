@@ -354,6 +354,20 @@ app.get("/getAdminUser", async (req, res)=>{
 })
 
 
+app.get("/alluserinfoOneData", async (req, res)=> {
+    const email = req.query.email
+    const filter = {email: email}
+    const currentUser= await userInfoDataCollections.findOne(filter)
+    res.send(currentUser)
+})
+
+
+
+
+
+
+
+
   } finally {
     // Ensures that the client will close when you finish/error
   }
